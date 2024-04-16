@@ -6,7 +6,7 @@ def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
-def extract_next_links(url, resp):
+def extract_next_links(url: str, resp) -> list:
     # Implementation required.
     # url: the URL that was used to get the page
     # resp.url: the actual url of the page
@@ -16,11 +16,18 @@ def extract_next_links(url, resp):
     #         resp.raw_response.url: the url, again
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
-    print(resp.content)
-    #soup = BeautifulSoup(resp.raw_response.content, 'html.parser')
-    return list()
+    
+    soup = BeautifulSoup(resp.raw_response.content, 'html.parser')
+    links = soup.find_all('a')
+    for link in links:
+        if is_valid(link):
+            my_list.append(link)
+    my_list = []
 
-def is_valid(url):
+    
+    return my_list
+
+def is_valid(url: str) -> bool:
     # Decide whether to crawl this url or not. 
     # If you decide to crawl it, return True; otherwise return False.
     # There are already some conditions that return False.
